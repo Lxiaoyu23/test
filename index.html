@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>采购平台 - 需求解析 / 履约交付 / 物流跟踪</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <h1>智能采购协同平台</h1>
+      <p>覆盖需求解析、履约交付、物流全链路跟踪</p>
+    </header>
+
+    <main class="container">
+      <section class="card" id="requirement-section">
+        <h2>1. 需求解析</h2>
+        <form id="requirement-form" class="grid-form">
+          <label>
+            采购需求标题
+            <input id="req-title" required placeholder="例如：Q3 办公设备采购" />
+          </label>
+          <label>
+            预算（元）
+            <input id="req-budget" type="number" min="1" required placeholder="500000" />
+          </label>
+          <label>
+            紧急度
+            <select id="req-priority" required>
+              <option value="">请选择</option>
+              <option value="高">高</option>
+              <option value="中">中</option>
+              <option value="低">低</option>
+            </select>
+          </label>
+          <label>
+            交付截止日期
+            <input id="req-deadline" type="date" required />
+          </label>
+          <label class="full-width">
+            需求描述
+            <textarea id="req-description" rows="3" required placeholder="请描述采购品类、数量、质量标准等"></textarea>
+          </label>
+          <button type="submit">解析需求并生成任务</button>
+        </form>
+        <div id="analysis-result" class="result-panel hidden"></div>
+      </section>
+
+      <section class="card" id="fulfillment-section">
+        <h2>2. 交付履约</h2>
+        <div class="toolbar">
+          <button id="create-order-btn" disabled>根据解析结果创建履约单</button>
+        </div>
+        <div id="order-card" class="order-card hidden">
+          <h3>履约单信息</h3>
+          <p id="order-summary"></p>
+          <ol id="fulfillment-steps" class="step-list"></ol>
+          <div class="actions">
+            <button id="next-step-btn" disabled>推进到下一节点</button>
+            <span id="step-hint"></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" id="logistics-section">
+        <h2>3. 物流跟踪</h2>
+        <form id="logistics-form" class="inline-form">
+          <input id="tracking-input" placeholder="输入运单号（如 TRK2026001）" required />
+          <button type="submit">查询物流</button>
+        </form>
+        <div id="logistics-empty" class="empty-tip">请先创建履约单并完成“发货出库”节点，再查询物流。</div>
+        <ul id="tracking-timeline" class="timeline hidden"></ul>
+      </section>
+    </main>
+
+    <template id="timeline-item-template">
+      <li class="timeline-item">
+        <div class="dot"></div>
+        <div>
+          <strong class="status"></strong>
+          <p class="time"></p>
+          <p class="detail"></p>
+        </div>
+      </li>
+    </template>
+
+    <script src="app.js"></script>
+  </body>
+</html>
